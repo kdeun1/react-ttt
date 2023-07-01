@@ -1,0 +1,8 @@
+.ttt-viewport {
+  display: flex;
+  flex-direction: row;
+}
+
+.ttt-info {
+  margin: 0 0 0 20px;
+}
