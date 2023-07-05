@@ -1,8 +1,32 @@
 .ttt-viewport {
   display: flex;
-  flex-direction: row;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .ttt-info {
-  margin: 0 0 0 20px;
+  display: flex;
+  width: 100%;
+  margin: 20px 0 0 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.move-button {
+  width: 200px;
+  padding: 10px 20px;
+  margin: 0 0 10px 0;
+  border: 0 solid transparent;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: rgb(107, 201, 80);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.board-status {
+  margin-bottom: 20px;
 }

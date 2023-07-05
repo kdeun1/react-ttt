@@ -9,6 +9,7 @@ const App = () => {
     },
   ]);
   const [xIsNext, setXIsNext] = useState(true);
+  const [stepNum, setStepNum] = useState(0);
 
   const calculateWinner = arr => {
     const lines = [
@@ -30,7 +31,7 @@ const App = () => {
     return null;
   };
 
-  const current = history[history.length - 1];
+  const current = history[stepNum];
   const winner = calculateWinner(current.squares);
   const getCurrentPlayer = flag => (flag ? 'X' : 'O');
 
@@ -42,14 +43,36 @@ const App = () => {
   }
 
   const handleClick = i => {
-    const newSqueres = current.squares.slice();
+    const newHistory = history.slice(0, stepNum + 1);
+    const newCurrent = newHistory[newHistory.length - 1];
+    const newSqueres = newCurrent.squares.slice();
+
     if (calculateWinner(newSqueres) || newSqueres[i]) {
       return;
     }
+
     newSqueres[i] = getCurrentPlayer(xIsNext);
-    setHistory([...history, { squares: newSqueres }]);
+    setHistory([...newHistory, { squares: newSqueres }]);
     setXIsNext(prev => !prev);
+
+    setStepNum(newHistory.length);
   };
+
+  const jumpTo = step => {
+    setStepNum(step);
+    setXIsNext(step % 2 === 0);
+  };
+
+  const moves = history.map((step, move) => {
+    const desc = move ? 'Go to move #' + move : 'Go to game start';
+    return (
+      <li key={move}>
+        <button className="move-button" onClick={() => jumpTo(move)}>
+          {desc}
+        </button>
+      </li>
+    );
+  });
 
   return (
     <div className="ttt-viewport">
@@ -58,6 +81,7 @@ const App = () => {
       </div>
       <div className="ttt-info">
         <div className="board-status">{status}</div>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
