@@ -1,8 +1,14 @@
 import './Board.css';
 import Square from '../Square/Square';
 
-const Board = ({ squares, onClick }) => {
-  const renderSquare = i => {
+type SquareState = string[];
+interface Props {
+  squares: SquareState;
+  onClick: (i: number) => void;
+}
+
+const Board = ({ squares, onClick }: Props) => {
+  const renderSquare = (i: number) => {
     return <Square value={squares[i]} onClick={() => onClick(i)} />;
   };
 

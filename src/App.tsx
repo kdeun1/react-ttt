@@ -2,17 +2,20 @@ import { useState } from 'react';
 import './App.css';
 import Board from './components/Board/Board';
 
+type SquareState = string[];
+type HistoryState = { squares: SquareState }[];
+
 const App = () => {
-  const [history, setHistory] = useState([
+  const [history, setHistory] = useState<HistoryState>([
     {
       squares: Array(9).fill(''),
     },
   ]);
-  const [xIsNext, setXIsNext] = useState(true);
-  const [stepNum, setStepNum] = useState(0);
+  const [xIsNext, setXIsNext] = useState<boolean>(true);
+  const [stepNum, setStepNum] = useState<number>(0);
 
-  const calculateWinner = arr => {
-    const lines = [
+  const calculateWinner = (arr: SquareState) => {
+    const lines: number[][] = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -33,7 +36,7 @@ const App = () => {
 
   const current = history[stepNum];
   const winner = calculateWinner(current.squares);
-  const getCurrentPlayer = flag => (flag ? 'X' : 'O');
+  const getCurrentPlayer = (flag: boolean) => (flag ? 'X' : 'O');
 
   let status;
   if (winner) {
@@ -42,7 +45,7 @@ const App = () => {
     status = `Next player: ${getCurrentPlayer(xIsNext)}`;
   }
 
-  const handleClick = i => {
+  const handleClick = (i: number) => {
     const newHistory = history.slice(0, stepNum + 1);
     const newCurrent = newHistory[newHistory.length - 1];
     const newSqueres = newCurrent.squares.slice();
@@ -58,7 +61,7 @@ const App = () => {
     setStepNum(newHistory.length);
   };
 
-  const jumpTo = step => {
+  const jumpTo = (step: number) => {
     setStepNum(step);
     setXIsNext(step % 2 === 0);
   };
@@ -77,7 +80,7 @@ const App = () => {
   return (
     <div className="ttt-viewport">
       <div className="ttt-board">
-        <Board squares={current.squares} onClick={i => handleClick(i)} />
+        <Board squares={current.squares} onClick={(i: number) => handleClick(i)} />
       </div>
       <div className="ttt-info">
         <div className="board-status">{status}</div>
